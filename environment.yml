@@ -1,0 +1,12 @@
+name: employee_dashboard
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9
+  - pandas
+  - numpy=1.26.4
+  - sqlalchemy
+  - streamlit
+  - openpyxl
+  - altair

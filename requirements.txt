@@ -1,0 +1,7 @@
+numpy<2.0
+pandas
+streamlit
+SQLAlchemy
+openpyxl
+pyarrow
+altair
