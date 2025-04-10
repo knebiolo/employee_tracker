@@ -13,7 +13,10 @@ import pandas as pd
 # Add src/ directory to sys.path for module import
 script_dir = os.path.dirname(os.path.abspath(__file__))
 src_path = os.path.abspath(os.path.join(script_dir, "..", "src"))
+base_path = os.path.abspath(os.path.join(script_dir,".."))
 sys.path.append(src_path)
+sys.path.append(base_path)
+
 
 import page_reader as reader
 
@@ -22,15 +25,16 @@ def main():
     Main function to run the data extraction and loading process.
     """
     # Set up project directory and file
-    proj_dir = r"C:\Users\knebiolo\OneDrive - Kleinschmidt Associates, Inc\Software\employee_tracker"
+    # Explicitly add the parent directory of Stryke to sys.path
+    #proj_dir = r"C:\Users\knebiolo\OneDrive - Kleinschmidt Associates, Inc\Software\employee_tracker"
     
     section_page = 'Mekong - Fisheries Aquatic'
     firm_page = '$ Utilization'
     
-    sheets = os.listdir(os.path.join(proj_dir,'data','raw'))
+    sheets = os.listdir(os.path.join(src_path,'data','raw'))
     
     for sheet in sheets:
-        sheet_path = os.path.join(proj_dir, 'data', 'raw', sheet)
+        sheet_path = os.path.join(src_path, 'data', 'raw', sheet)
     
         # Load Excel page
         employee_page = pd.read_excel(sheet_path, sheet_name = section_page)
@@ -55,7 +59,7 @@ def main():
         firm_week_df, firm_mtd_df, firm_ytd_df = reader.get_firm_data(util_page, period_end, firm_row, util_col_name_idx)
     
         # Write all data to database
-        reader.write_data(proj_dir, 
+        reader.write_data(src_path, 
                         period_end, 
                         employee_df, 
                         emp_week_df, 
@@ -69,7 +73,7 @@ def main():
                         firm_ytd_df)
     
         # Move processed file
-        reader.clean_up(proj_dir, sheet)
+        reader.clean_up(src_path, sheet)
 
 if __name__ == "__main__":
     main()
