@@ -31,10 +31,10 @@ def main():
     section_page = 'Mekong - Fisheries Aquatic'
     firm_page = '$ Utilization'
     
-    sheets = os.listdir(os.path.join(src_path,'data','raw'))
+    sheets = os.listdir(os.path.join(base_path,'data','raw'))
     
     for sheet in sheets:
-        sheet_path = os.path.join(src_path, 'data', 'raw', sheet)
+        sheet_path = os.path.join(base_path, 'data', 'raw', sheet)
     
         # Load Excel page
         employee_page = pd.read_excel(sheet_path, sheet_name = section_page)
@@ -59,7 +59,7 @@ def main():
         firm_week_df, firm_mtd_df, firm_ytd_df = reader.get_firm_data(util_page, period_end, firm_row, util_col_name_idx)
     
         # Write all data to database
-        reader.write_data(src_path, 
+        reader.write_data(base_path, 
                         period_end, 
                         employee_df, 
                         emp_week_df, 
@@ -73,7 +73,7 @@ def main():
                         firm_ytd_df)
     
         # Move processed file
-        reader.clean_up(src_path, sheet)
+        reader.clean_up(base_path, sheet)
 
 if __name__ == "__main__":
     main()
